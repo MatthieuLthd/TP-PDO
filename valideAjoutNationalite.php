@@ -3,7 +3,6 @@ include "connexionPdo.php";
 $libelle = $_POST['libelle'];
 
 $req=$monPdo->prepare("INSERT INTO nationalite(libelle) VALUES(:libelle)");
-$req = $monPdo->prepare("SELECT * FROM nationalite");
 $req->bindParam(':libelle', $libelle);
 $nb = $req->execute();
 
