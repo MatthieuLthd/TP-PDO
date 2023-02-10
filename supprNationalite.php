@@ -1,11 +1,10 @@
 <?php include "header.php";
 include "connexionPdo.php";
-$libelle = $_POST['libelle'];
+$num = $_GET['num'];
 
-$req=$monPdo->prepare("INSERT INTO nationalite(libelle) VALUES(:libelle)");
-$req->bindParam(':libelle', $libelle);
+$req=$monPdo->prepare("DELETE FROM nationalite where num = :num");
+$req->bindParam(':num', $num);
 $nb = $req->execute();
-
 
 echo '<div class="container mt-5">';
 echo '<div class="row">
@@ -13,12 +12,12 @@ echo '<div class="row">
 
 if($nb == 1) {
     echo '<div class="alert alert-success" role="alert">
-    La nationalité a bien été ajoutée
+    La nationalité a bien été supprimée
     </div> ';
 
 }else{
     echo ' <div class="alert alert-warning" role="alert">
-    La nationalité n\'a pas été ajoutée !
+    Problème : La nationalité n\'a pas été supprimée !
     </div> ';
 
 }
