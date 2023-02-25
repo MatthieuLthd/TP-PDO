@@ -1,7 +1,7 @@
 <?php include "header.php";
 $action = $_GET['action']; // Soit ajouter soit modifier
 if($action == "Modifier"){
-    include "connexionPdo.php";
+    include "Home_connexionPdo.php";
     $num = $_GET['num'];
     $req = $monPdo->prepare("select * from nationalite where num = :num");
     $req->setFetchMode(PDO::FETCH_OBJ);

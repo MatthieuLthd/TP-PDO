@@ -1,5 +1,5 @@
 <?php include "header.php";
-include "connexionPdo.php";
+include "Home_connexionPdo.php";
 $req = $monPdo->prepare("select * from nationalite");
 $req->setFetchMode(PDO::FETCH_OBJ);
 $req->execute();
@@ -31,7 +31,7 @@ $lesNationalites = $req->fetchAll();
             echo "<td class='col-md-8' >$nationalite->libelle</td>";
             echo "<td class='col-md-2'>
                 <a href='formNationalite.php?action=Modifier&num=$nationalite->num' class='btn btn-info'><i class='fas fa-pen'></i></a>
-                <a href='supprNationalite.php?num=$nationalite->num' class ='btn btn-warning'><i class ='far fa-trash-alt'></i></a>
+                <a href='#modalSuppr' data-toggle='modal' data-message='Etes-vous sûr de vouloir supprimer cette nationalité ?' data-Suppr='supprNationalite.php?num=$nationalite->num' class ='btn btn-warning'><i class ='far fa-trash-alt'></i></a>
             </td>";
             echo "</tr>";
         }
@@ -41,6 +41,7 @@ $lesNationalites = $req->fetchAll();
     </tbody>
     </table>
 </div>
+
 
 <?php include "footer.php";
 ?>

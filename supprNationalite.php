@@ -1,5 +1,5 @@
 <?php include "header.php";
-include "connexionPdo.php";
+include "Home_connexionPdo.php";
 $num = $_GET['num'];
 
 $req=$monPdo->prepare("DELETE FROM nationalite where num = :num");
