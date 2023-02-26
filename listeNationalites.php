@@ -1,9 +1,46 @@
 <?php include "header.php";
 include "Home_connexionPdo.php";
-$req = $monPdo->prepare("select * from nationalite");
+// Liste des nationalités
+$libelle="";
+$continentSel="Tous";
+// Construction de la requête
+$textReq="select n.num, n.libelle as 'libNation', c.libelle as 'libContinent'  from nationalite n, continent c where n.numContinent=c.num";
+if(!empty($_GET)){
+    $libelle = $_GET['libelle'];
+    $continentSel = $_GET['continent'];
+    if($libelle != "") { $textReq.= " and n.libelle like '%".$libelle."%'";}
+    if($continentSel != "Tous") { $textReq.= " and c.num =".$continentSel;}
+}
+
+$textReq.= " order by n.libelle";
+
+var_dump($_GET);
+
+$req = $monPdo->prepare($textReq);
 $req->setFetchMode(PDO::FETCH_OBJ);
 $req->execute();
 $lesNationalites = $req->fetchAll();
+
+// Liste des continents
+$reqContinent=$monPdo->prepare("select * from continent");
+$reqContinent->setFetchMode(PDO::FETCH_OBJ);
+$reqContinent->execute();
+$lesContinents=$reqContinent->fetchAll();
+
+if(!empty($_SESSION['message'])){
+    $mesMessages=$_SESSION['message'];
+    foreach($mesMessages as $key=>$message){
+        echo '<div class="container pt-5">
+                <div class="alert alert-'.$key.' alert-dismissible fade show" role="alert">'. $message.'
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>';
+    }
+    $_SESSION['message'] = [];
+}
+
 ?>
 
 
@@ -15,11 +52,36 @@ $lesNationalites = $req->fetchAll();
         
     </div>
 
+
+    <form action="" method="get" class="border border-primary rounded p-3 mt-3 mb-3">
+        <div class="row">
+            <div class="col">
+                <input type="text" class='form-control' id="libelle" placehoder="Saisir le libellé" name="libelle" value="<?php echo $libelle; ?>">
+            </div>
+            <div class="col">
+                <select name="continent" class='form-control'>
+                        <?php
+                        echo "<option value='Tous'>Tous les continents</option>";
+                        foreach($lesContinents as $continent){
+                            $selection=$continent->num == $continentSel ? 'selected' : '';
+                            echo "<option value='$continent->num' $selection>$continent->libelle</option>";
+                        }
+                        ?>
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success btn-block">Rechercher</button>
+            </div>
+        </div>
+    </form>
+
+
     <table class="table table-striped">
     <thead>
         <tr class="d-flex">
         <th scope="col" class="col-md-2">Numéro</th>
-        <th scope="col" class="col-md-8">Libellé</th>
+        <th scope="col" class="col-md-4">Libellé</th>
+        <th scope="col" class="col-md-4">Continent</th>
         <th scope="col" class="col-md-2">Actions</th>
         </tr>
     </thead>
@@ -28,7 +90,8 @@ $lesNationalites = $req->fetchAll();
         foreach($lesNationalites as $nationalite){
             echo "<tr class='d-flex'>";
             echo "<td class='col-md-2' >$nationalite->num</td>";
-            echo "<td class='col-md-8' >$nationalite->libelle</td>";
+            echo "<td class='col-md-4' >$nationalite->libNation</td>";
+            echo "<td class='col-md-4' >$nationalite->libContinent</td>";
             echo "<td class='col-md-2'>
                 <a href='formNationalite.php?action=Modifier&num=$nationalite->num' class='btn btn-info'><i class='fas fa-pen'></i></a>
                 <a href='#modalSuppr' data-toggle='modal' data-message='Etes-vous sûr de vouloir supprimer cette nationalité ?' data-Suppr='supprNationalite.php?num=$nationalite->num' class ='btn btn-warning'><i class ='far fa-trash-alt'></i></a>
