@@ -5,7 +5,7 @@
         <h5 class="modal-title">Confirmation de supression</h5>
       </div>
       <div class="modal-body">
-        <p><b>Etes-vous sûr de vouloir supprimer cette nationalité ?</b></p>
+        <p><b>Etes-vous sûr de vouloir supprimer ?</b></p>
       </div>
       <div class="modal-footer">
         <a href="" type="button" class="btn btn-primary" id="btnSuppr">Supprimer</a>

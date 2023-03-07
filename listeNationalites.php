@@ -1,5 +1,6 @@
 <?php include "header.php";
 include "connexionPdo.php";
+$nature=" cette nationalité ";
 // Liste des nationalités
 $libelle="";
 $continentSel="Tous";
