@@ -1,5 +1,5 @@
 <?php include "header.php";
-include "Home_connexionPdo.php";
+include "connexionPdo.php";
 $action = $_GET['action'];
 $num = $_POST['num']; // récup libellé formulaire
 $libelle = $_POST['libelle']; // recup libellé formulaire
