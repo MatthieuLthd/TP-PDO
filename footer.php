@@ -1,3 +1,4 @@
+</div><!--  fermeture du container  -->
 <div id="modalSuppr" class="modal fade">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

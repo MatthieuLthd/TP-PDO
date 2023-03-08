@@ -15,7 +15,7 @@ if(!empty($_GET)){
 
 $textReq.= " order by n.libelle";
 
-var_dump($_GET);
+
 
 $req = $monPdo->prepare($textReq);
 $req->setFetchMode(PDO::FETCH_OBJ);
@@ -28,19 +28,7 @@ $reqContinent->setFetchMode(PDO::FETCH_OBJ);
 $reqContinent->execute();
 $lesContinents=$reqContinent->fetchAll();
 
-if(!empty($_SESSION['message'])){
-    $mesMessages=$_SESSION['message'];
-    foreach($mesMessages as $key=>$message){
-        echo '<div class="container pt-5">
-                <div class="alert alert-'.$key.' alert-dismissible fade show" role="alert">'. $message.'
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>';
-    }
-    $_SESSION['message'] = [];
-}
+
 
 ?>
 
